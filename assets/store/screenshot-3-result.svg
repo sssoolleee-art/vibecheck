@@ -1,0 +1,57 @@
+<svg width="636" height="1048" viewBox="0 0 636 1048" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="636" height="1048" fill="#F8F6FF"/>
+
+  <!-- 히어로 카드 -->
+  <rect width="636" height="320" fill="url(#heroGrad)"/>
+  <rect x="218" y="44" width="200" height="28" rx="14" fill="rgba(255,255,255,0.2)"/>
+  <text x="318" y="63" font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.9)" text-anchor="middle" letter-spacing="2">MY VIBE TYPE</text>
+  <text x="318" y="152" font-family="sans-serif" font-size="80" text-anchor="middle">⚡</text>
+  <text x="318" y="222" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="40" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">스파크 바이브</text>
+  <text x="318" y="264" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="20" font-weight="500" fill="rgba(255,255,255,0.85)" text-anchor="middle">번개처럼 터지는 아이디어 메이커</text>
+
+  <!-- 설명 카드 -->
+  <rect x="0" y="332" width="636" height="156" fill="#FFFFFF"/>
+  <text x="40" y="368" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#9CA3AF" letter-spacing="1.5">ABOUT YOUR VIBE</text>
+  <text x="40" y="398" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#374151">남들이 보지 못하는 걸 보고, 예상치</text>
+  <text x="40" y="420" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#374151">못한 방향으로 생각하는 게 특기예요.</text>
+  <text x="40" y="442" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#374151">창의성과 즉흥성이 합쳐진 타입이에요.</text>
+  <text x="40" y="464" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#374151">항상 다음 아이디어가 머릿속에 튀어나와요.</text>
+
+  <!-- 키워드 태그 -->
+  <rect x="0" y="500" width="636" height="120" fill="#FFFFFF"/>
+  <text x="40" y="532" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#9CA3AF" letter-spacing="1.5">VIBE KEYWORDS</text>
+  <rect x="40" y="548" width="136" height="34" rx="17" fill="#F5F3FF"/>
+  <text x="108" y="570" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#7C3AED" text-anchor="middle">폭발적인 창의력</text>
+  <rect x="188" y="548" width="80" height="34" rx="17" fill="#F5F3FF"/>
+  <text x="228" y="570" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#7C3AED" text-anchor="middle">즉흥성</text>
+  <rect x="280" y="548" width="104" height="34" rx="17" fill="#F5F3FF"/>
+  <text x="332" y="570" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#7C3AED" text-anchor="middle">새로운 시각</text>
+  <rect x="40" y="590" width="120" height="34" rx="17" fill="#F5F3FF"/>
+  <text x="100" y="612" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#7C3AED" text-anchor="middle">트렌드 감각</text>
+
+  <!-- TIP 카드 -->
+  <rect x="0" y="632" width="636" height="100" fill="#FFFFFF"/>
+  <rect x="0" y="632" width="4" height="100" fill="#7C3AED"/>
+  <text x="52" y="664" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="700" fill="#1F2937">바이브 업그레이드 TIP</text>
+  <text x="52" y="688" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" fill="#6B7280">아이디어를 완성까지 끌고 가는 연습을 해보세요.</text>
+  <text x="52" y="708" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" fill="#6B7280">시작만큼 마무리도 멋질 거예요 ⚡</text>
+
+  <!-- 공유 버튼 -->
+  <rect x="40" y="760" width="556" height="68" rx="16" fill="url(#btnGrad)"/>
+  <text x="318" y="800" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">친구 바이브도 체크해보기 ⚡</text>
+
+  <!-- 다시하기 -->
+  <rect x="40" y="844" width="556" height="60" rx="16" fill="#F3F4F6"/>
+  <text x="318" y="880" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="600" fill="#6B7280" text-anchor="middle">다시 체크하기</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg width="1932" height="828" viewBox="0 0 1932 828" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0C0A1A"/>
+      <stop offset="100%" style="stop-color:#0E0A22"/>
+    </linearGradient>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="fireGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F97316"/>
+      <stop offset="100%" style="stop-color:#EF4444"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="100%" style="stop-color:#6366F1"/>
+    </linearGradient>
+    <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="deepGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#A855F7"/>
+    </linearGradient>
+    <filter id="blob1">
+      <feGaussianBlur stdDeviation="80"/>
+    </filter>
+    <filter id="blob2">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="1932" height="828" fill="url(#bg)"/>
+
+  <!-- 배경 블롭 -->
+  <ellipse cx="400" cy="300" rx="400" ry="300" fill="#7C3AED" fill-opacity="0.18" filter="url(#blob1)"/>
+  <ellipse cx="1600" cy="500" rx="350" ry="280" fill="#06B6D4" fill-opacity="0.14" filter="url(#blob1)"/>
+  <ellipse cx="966" cy="414" rx="300" ry="200" fill="#A855F7" fill-opacity="0.08" filter="url(#blob2)"/>
+
+  <!-- 왼쪽: 텍스트 영역 -->
+  <!-- 배지 -->
+  <rect x="120" y="180" width="180" height="32" rx="16" fill="#7C3AED" fill-opacity="0.3"/>
+  <text x="210" y="201" font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#A78BFA" text-anchor="middle" letter-spacing="2">VIBE CHECK</text>
+
+  <!-- 메인 타이틀 -->
+  <text x="120" y="300" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="100" font-weight="900" fill="#FFFFFF" letter-spacing="-3">바이브체크</text>
+
+  <!-- 서브타이틀 -->
+  <text x="120" y="365" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="34" font-weight="400" fill="#A78BFA" letter-spacing="-0.5">8가지 질문으로 발견하는 나만의 에너지 유형</text>
+
+  <!-- 설명 텍스트 -->
+  <text x="120" y="430" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="26" font-weight="400" fill="rgba(255,255,255,0.5)" letter-spacing="-0.3">나를 이해하면 모든 게 달라진다</text>
+
+  <!-- 유형 뱃지들 -->
+  <g transform="translate(120, 510)">
+    <!-- 파이어 -->
+    <rect width="150" height="52" rx="14" fill="#F97316" fill-opacity="0.15" stroke="#F97316" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="75" y="26" font-family="sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">🔥</text>
+    <text x="75" y="44" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#FB923C" text-anchor="middle">파이어</text>
+
+    <!-- 웨이브 -->
+    <rect x="164" width="150" height="52" rx="14" fill="#0EA5E9" fill-opacity="0.15" stroke="#0EA5E9" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="239" y="26" font-family="sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">🌊</text>
+    <text x="239" y="44" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#38BDF8" text-anchor="middle">웨이브</text>
+
+    <!-- 스파크 -->
+    <rect x="328" width="150" height="52" rx="14" fill="#7C3AED" fill-opacity="0.15" stroke="#7C3AED" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="403" y="26" font-family="sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">⚡</text>
+    <text x="403" y="44" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#A78BFA" text-anchor="middle">스파크</text>
+
+    <!-- 딥 -->
+    <rect x="492" width="150" height="52" rx="14" fill="#6366F1" fill-opacity="0.15" stroke="#6366F1" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="567" y="26" font-family="sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">🌙</text>
+    <text x="567" y="44" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="600" fill="#818CF8" text-anchor="middle">딥</text>
+  </g>
+
+  <!-- 구분선 -->
+  <line x1="940" y1="100" x2="940" y2="728" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- 오른쪽: 파형 아이콘 (크게) -->
+  <g transform="translate(966, 414)" filter="url(#glow)">
+    <polyline
+      points="-340,0 -280,0 -240,-110 -200,110 -160,-110 -120,110 -80,-80 -40,40 0,0 80,0 120,-130 160,130 200,-130 240,130 280,-60 320,60 360,0"
+      fill="none"
+      stroke="url(#grad1)"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+
+  <!-- 체크마크 (파형 위에 오버랩) -->
+  <g transform="translate(1326, 354)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="60" fill="#0C0A1A" stroke="url(#grad1)" stroke-width="4"/>
+    <polyline points="-22,4 -6,20 26,-20" fill="none" stroke="url(#grad1)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

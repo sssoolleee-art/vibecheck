@@ -1,0 +1,61 @@
+<svg width="636" height="1048" viewBox="0 0 636 1048" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8F6FF"/>
+      <stop offset="100%" style="stop-color:#F0EDFF"/>
+    </linearGradient>
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="636" height="1048" fill="url(#bg)"/>
+
+  <!-- 상단 배지 -->
+  <rect x="40" y="100" width="160" height="30" rx="15" fill="#EDE9FE"/>
+  <text x="120" y="120" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="700" fill="#7C3AED" text-anchor="middle" letter-spacing="1.5">PERSONALITY TEST</text>
+
+  <!-- 메인 타이틀 -->
+  <text x="40" y="185" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="56" font-weight="900" fill="#0F0A2A" letter-spacing="-2">나의 바이브</text>
+  <text x="40" y="250" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="56" font-weight="900" fill="#0F0A2A" letter-spacing="-2">유형은?</text>
+
+  <!-- 서브 -->
+  <text x="40" y="300" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="20" font-weight="400" fill="#6B7280">8가지 질문으로 알아보는</text>
+  <text x="40" y="326" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="20" font-weight="400" fill="#6B7280">나만의 에너지 타입</text>
+
+  <!-- 유형 카드 그리드 -->
+  <!-- 파이어 -->
+  <rect x="40" y="390" width="264" height="90" rx="18" fill="#FFF4EE" stroke="#FED7AA" stroke-width="1.5"/>
+  <text x="72" y="445" font-family="sans-serif" font-size="34">🔥</text>
+  <text x="118" y="430" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="600" fill="#374151">파이어 바이브</text>
+  <text x="118" y="454" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="13" font-weight="400" fill="#9CA3AF">불꽃 같은 에너지</text>
+
+  <!-- 웨이브 -->
+  <rect x="332" y="390" width="264" height="90" rx="18" fill="#EFF8FF" stroke="#BAE6FD" stroke-width="1.5"/>
+  <text x="364" y="445" font-family="sans-serif" font-size="34">🌊</text>
+  <text x="410" y="430" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="600" fill="#374151">웨이브 바이브</text>
+  <text x="410" y="454" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="13" font-weight="400" fill="#9CA3AF">흐름을 타는 유형</text>
+
+  <!-- 스파크 -->
+  <rect x="40" y="498" width="264" height="90" rx="18" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
+  <text x="72" y="553" font-family="sans-serif" font-size="34">⚡</text>
+  <text x="118" y="538" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="600" fill="#374151">스파크 바이브</text>
+  <text x="118" y="562" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="13" font-weight="400" fill="#9CA3AF">아이디어 메이커</text>
+
+  <!-- 딥 -->
+  <rect x="332" y="498" width="264" height="90" rx="18" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.5"/>
+  <text x="364" y="553" font-family="sans-serif" font-size="34">🌙</text>
+  <text x="410" y="538" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="600" fill="#374151">딥 바이브</text>
+  <text x="410" y="562" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="13" font-weight="400" fill="#9CA3AF">깊은 사유의 소유자</text>
+
+  <!-- 인포 -->
+  <text x="318" y="650" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#9CA3AF" text-anchor="middle">⏱️ 약 2분  ·  8문항  ·  4가지 유형</text>
+
+  <!-- 버튼 -->
+  <rect x="40" y="690" width="556" height="72" rx="18" fill="url(#btnGrad)"/>
+  <text x="318" y="733" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">바이브 체크하기</text>
+
+  <!-- 하단 면책 -->
+  <text x="318" y="800" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif" font-size="14" fill="#9CA3AF" text-anchor="middle">* 재미로 즐기는 성향 테스트예요</text>
+</svg>
