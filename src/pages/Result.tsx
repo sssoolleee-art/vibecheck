@@ -1,5 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { TossAds } from '@apps-in-toss/web-framework';
 import { ResultType } from '../data/questions';
+
+const BANNER_AD_ID = 'ait.v2.live.b5f735167da742bb';
+
+function BannerAd() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!ref.current || !TossAds.attachBanner.isSupported()) return;
+    const result = TossAds.attachBanner(BANNER_AD_ID, ref.current);
+    return () => result.destroy();
+  }, []);
+  return <div ref={ref} style={{ width: '100%', minHeight: 50 }} />;
+}
 
 interface ResultProps {
   result: ResultType;
@@ -26,19 +39,18 @@ export default function Result({ result, onRetry }: ResultProps) {
 
   function handleShare() {
     const text = `나의 바이브 유형은 "${result.emoji} ${result.title}"!\n${result.subtitle}\n\n바이브체크에서 나도 해보기 👇`;
-    if (navigator.share) {
-      navigator.share({ title: '바이브체크', text });
-    } else {
-      navigator.clipboard.writeText(text).then(() => {
-        setShowModal(true);
-      });
-    }
+    navigator.clipboard.writeText(text).then(() => {
+      setShowModal(true);
+    });
   }
 
   const gradientStyle = `linear-gradient(135deg, ${result.gradient[0]} 0%, ${result.gradient[1]} 100%)`;
 
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, paddingBottom: 50 }}>
+      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100 }}>
+        <BannerAd />
+      </div>
       {showModal && (
         <div style={styles.modalOverlay} onClick={() => setShowModal(false)}>
           <div style={styles.modalSheet} onClick={(e) => e.stopPropagation()}>

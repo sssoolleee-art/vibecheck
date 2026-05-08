@@ -5,7 +5,7 @@ export default defineConfig({
   brand: {
     displayName: '바이브체크',
     primaryColor: '#7C3AED',
-    icon: 'https://raw.githubusercontent.com/sssoolleee-art/vibecheck/main/public/icon.png',
+    icon: 'https://static.toss.im/appsintoss/27863/632933b5-c722-4b43-b879-00874e9ead34.png',
   },
   web: {
     host: 'localhost',

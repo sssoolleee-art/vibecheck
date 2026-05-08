@@ -4,6 +4,7 @@ import Quiz from './pages/Quiz';
 import Result from './pages/Result';
 import { calculateResult } from './data/questions';
 import type { ResultType } from './data/questions';
+import { showInterstitialAd } from './utils/ads';
 
 type Screen = 'home' | 'quiz' | 'result';
 
@@ -15,9 +16,10 @@ export default function App() {
     setScreen('quiz');
   }
 
-  function handleComplete(answers: Record<number, number>) {
+  async function handleComplete(answers: Record<number, number>) {
     const r = calculateResult(answers);
     setResult(r);
+    await showInterstitialAd();
     setScreen('result');
   }
 
