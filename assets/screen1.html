@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 636px;
+  height: 1048px;
+  background: #0D0D0D;
+  font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  color: #fff;
+  padding: 56px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.app-name { font-size: 12px; font-weight: 700; color: #C0392B; letter-spacing: 1.5px; }
+.streak { display: flex; align-items: center; gap: 4px; background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.3); border-radius: 99px; padding: 4px 10px; }
+.streak span { font-size: 12px; font-weight: 700; color: #E74C3C; }
+.title { font-size: 30px; font-weight: 900; line-height: 1.25; margin-bottom: 8px; }
+.title em { color: #C0392B; font-style: normal; }
+.subtitle { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+.week { display: flex; justify-content: space-between; margin-bottom: 28px; }
+.day { width: 72px; height: 60px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 2px solid transparent; }
+.day.done { background: rgba(192,57,43,0.3); }
+.day.empty { background: rgba(255,255,255,0.06); }
+.day.today { background: rgba(192,57,43,0.2); border-color: #C0392B; }
+.day-emoji { font-size: 20px; }
+.day-lbl { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 600; }
+.cta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 20px; }
+.emojis { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; }
+.emojis span { font-size: 26px; }
+.start-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #C0392B 0%, #8E44AD 100%); color: #fff; font-size: 17px; font-weight: 800; border-radius: 14px; border: none; letter-spacing: -0.3px; box-shadow: 0 4px 24px rgba(192,57,43,0.4); text-align: center; }
+.hint { font-size: 12px; color: rgba(255,255,255,0.3); }
+.map-btn { width: 100%; padding: 13px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; text-align: center; margin-bottom: 24px; }
+.groups { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.group { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; }
+.group-title { font-size: 14px; font-weight: 800; color: #C0392B; margin-bottom: 4px; }
+.group-desc { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.group-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="header-top">
+  <div class="app-name">DESIRE INDEX</div>
+  <div class="streak">🔥 <span>3일 연속</span></div>
+</div>
+<div class="title">오늘 나를 움직이는<br><em>욕망</em>은 무엇인가</div>
+<div class="subtitle">매일 5문제 · 오욕칠정 기반 심리진단</div>
+<div class="week">
+  <div class="day done"><div class="day-emoji">💰</div><div class="day-lbl">월</div></div>
+  <div class="day done"><div class="day-emoji">😤</div><div class="day-lbl">화</div></div>
+  <div class="day done"><div class="day-emoji">💗</div><div class="day-lbl">수</div></div>
+  <div class="day empty"><div class="day-emoji"></div><div class="day-lbl">목</div></div>
+  <div class="day empty"><div class="day-emoji"></div><div class="day-lbl">금</div></div>
+  <div class="day empty"><div class="day-emoji"></div><div class="day-lbl">토</div></div>
+  <div class="day today"><div class="day-emoji">?</div><div class="day-lbl">일</div></div>
+</div>
+<div class="cta">
+  <div class="emojis">
+    <span>💰</span><span>🔥</span><span>🍖</span><span>👑</span><span>😴</span><span>😄</span>
+    <span>😤</span><span>😢</span><span>😰</span><span>💗</span><span>🖤</span><span>🌑</span>
+  </div>
+  <div class="start-btn">오늘의 욕망 진단하기</div>
+  <div class="hint">매일 새로운 질문 · 약 1분</div>
+</div>
+<div class="map-btn">7일 욕망 지도 보기 →</div>
+<div class="groups">
+  <div class="group">
+    <div class="group-title">오욕 五慾</div>
+    <div class="group-desc">재·색·식·명예·수면</div>
+    <div class="group-sub">본능에서 비롯된 욕망</div>
+  </div>
+  <div class="group">
+    <div class="group-title">칠정 七情</div>
+    <div class="group-desc">희·노·애·구·애·오·욕</div>
+    <div class="group-sub">감정에서 비롯된 욕망</div>
+  </div>
+</div>
+</body>
+</html>

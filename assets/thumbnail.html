@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1932px;
+  height: 828px;
+  background: #0D0D0D;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 120px;
+  font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+.glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(192,57,43,0.3) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+.badge {
+  font-size: 22px;
+  font-weight: 700;
+  color: #C0392B;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.title {
+  font-size: 100px;
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -4px;
+  line-height: 1.1;
+}
+.title span { color: #C0392B; }
+.desc {
+  font-size: 28px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+.tags {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+.tag {
+  padding: 8px 20px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 99px;
+  font-size: 20px;
+  color: rgba(255,255,255,0.6);
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+.big-emoji {
+  font-size: 200px;
+  line-height: 1;
+  filter: drop-shadow(0 0 60px rgba(192,57,43,0.5));
+}
+.desires-grid {
+  display: flex;
+  gap: 16px;
+}
+.desire-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.desire-emoji { font-size: 40px; }
+.desire-label { font-size: 16px; color: rgba(255,255,255,0.4); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="left">
+  <div class="badge">Desire Index</div>
+  <div class="title">오늘의<br><span>욕망</span>은<br>무엇인가</div>
+  <div class="desc">오욕칠정 기반 매일 심리 진단<br>나를 움직이는 욕망을 찾아보세요</div>
+  <div class="tags">
+    <div class="tag">매일 5문제</div>
+    <div class="tag">7일 욕망 지도</div>
+    <div class="tag">12가지 욕망</div>
+  </div>
+</div>
+<div class="right">
+  <div class="big-emoji">🌑</div>
+  <div class="desires-grid">
+    <div class="desire-chip"><div class="desire-emoji">💰</div><div class="desire-label">재욕</div></div>
+    <div class="desire-chip"><div class="desire-emoji">🔥</div><div class="desire-label">색욕</div></div>
+    <div class="desire-chip"><div class="desire-emoji">👑</div><div class="desire-label">명예욕</div></div>
+    <div class="desire-chip"><div class="desire-emoji">💗</div><div class="desire-label">애정</div></div>
+    <div class="desire-chip"><div class="desire-emoji">😤</div><div class="desire-label">노</div></div>
+    <div class="desire-chip"><div class="desire-emoji">😢</div><div class="desire-label">애</div></div>
+  </div>
+</div>
+</body>
+</html>

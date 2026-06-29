@@ -1,115 +1,151 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { TossAds } from '@apps-in-toss/web-framework';
-import { ResultType } from '../data/questions';
-
-const BANNER_AD_ID = 'ait.v2.live.b5f735167da742bb';
-
-function BannerAd() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!ref.current || !TossAds.attachBanner.isSupported()) return;
-    const result = TossAds.attachBanner(BANNER_AD_ID, ref.current);
-    return () => result.destroy();
-  }, []);
-  return <div ref={ref} style={{ width: '100%', minHeight: 50 }} />;
-}
+import React, { useState } from 'react';
+import type { DesireKey } from '../data/desires';
+import { DESIRES, DESIRE_KEYS } from '../data/desires';
+import { BannerAd, isAdFree, buyAdFree, showRewardedAd } from '../utils/ads';
 
 interface ResultProps {
-  result: ResultType;
-  onRetry: () => void;
+  dominant: DesireKey;
+  scores: Partial<Record<DesireKey, number>>;
+  totalQuestions: number;
+  onHome: () => void;
+  onViewMap: () => void;
 }
 
-export default function Result({ result, onRetry }: ResultProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [showModal, setShowModal] = useState(false);
+const DEEP_UNLOCK_KEY = 'desireindex_deep_unlocked';
 
-  useEffect(() => {
-    if (cardRef.current) {
-      cardRef.current.style.opacity = '0';
-      cardRef.current.style.transform = 'translateY(24px)';
-      setTimeout(() => {
-        if (cardRef.current) {
-          cardRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-          cardRef.current.style.opacity = '1';
-          cardRef.current.style.transform = 'translateY(0)';
-        }
-      }, 80);
+export default function Result({ dominant, scores, totalQuestions, onHome, onViewMap }: ResultProps) {
+  const desire = DESIRES[dominant];
+  const [deepUnlocked, setDeepUnlocked] = useState(() =>
+    localStorage.getItem(DEEP_UNLOCK_KEY) === 'true'
+  );
+  const [unlocking, setUnlocking] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
+  const adFree = isAdFree();
+
+  async function handleUnlockDeep() {
+    if (unlocking || deepUnlocked) return;
+    setUnlocking(true);
+    const earned = await showRewardedAd();
+    if (earned) {
+      localStorage.setItem(DEEP_UNLOCK_KEY, 'true');
+      setDeepUnlocked(true);
     }
-  }, []);
-
-  function handleShare() {
-    const text = `나의 바이브 유형은 "${result.emoji} ${result.title}"!\n${result.subtitle}\n\n바이브체크에서 나도 해보기 👇`;
-    navigator.clipboard.writeText(text).then(() => {
-      setShowModal(true);
-    });
+    setUnlocking(false);
   }
 
-  const gradientStyle = `linear-gradient(135deg, ${result.gradient[0]} 0%, ${result.gradient[1]} 100%)`;
+  function handleBuyAdFree() {
+    setPurchasing(true);
+    buyAdFree(
+      () => {},
+      () => setPurchasing(false),
+    );
+  }
+
+  // top 3 desires by score
+  const ranked = DESIRE_KEYS
+    .filter(k => (scores[k] ?? 0) > 0)
+    .sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0));
+
+  const maxScore = Math.max(...ranked.map(k => scores[k] ?? 0), 1);
 
   return (
-    <div style={{ ...styles.container, paddingBottom: 50 }}>
-      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100 }}>
-        <BannerAd />
+    <div style={styles.container}>
+      {/* Hero */}
+      <div style={{ ...styles.hero, background: `linear-gradient(180deg, ${desire.color}22 0%, #0D0D0D 100%)` }}>
+        <div style={styles.resultBadge}>오늘의 지배 욕망</div>
+        <div style={styles.heroEmoji}>{desire.emoji}</div>
+        <h1 style={styles.heroLabel}>{desire.label}</h1>
+        <p style={styles.heroHanja}>{desire.hanja}</p>
+        <p style={styles.heroShort}>{desire.shortDesc}</p>
       </div>
-      {showModal && (
-        <div style={styles.modalOverlay} onClick={() => setShowModal(false)}>
-          <div style={styles.modalSheet} onClick={(e) => e.stopPropagation()}>
-            <p style={styles.modalEmoji}>⚡</p>
-            <p style={styles.modalTitle}>복사됐어요!</p>
-            <p style={styles.modalDesc}>친구에게 공유해 보세요</p>
-            <button style={styles.modalButton} onClick={() => setShowModal(false)}>
-              확인
-            </button>
-          </div>
+
+      {/* Full desc */}
+      <div style={styles.section}>
+        <p style={styles.fullDesc}>{desire.fullDesc}</p>
+      </div>
+
+      {/* Score breakdown */}
+      {ranked.length > 1 && (
+        <div style={styles.section}>
+          <div style={styles.sectionTitle}>욕망 분포</div>
+          {ranked.slice(0, 5).map(k => {
+            const d = DESIRES[k];
+            const pct = Math.round(((scores[k] ?? 0) / maxScore) * 100);
+            return (
+              <div key={k} style={styles.barRow}>
+                <span style={styles.barEmoji}>{d.emoji}</span>
+                <span style={styles.barLabel}>{d.label}</span>
+                <div style={styles.barTrack}>
+                  <div style={{ ...styles.barFill, width: `${pct}%`, background: d.color }} />
+                </div>
+                <span style={styles.barVal}>{scores[k]}</span>
+              </div>
+            );
+          })}
         </div>
       )}
-      <div ref={cardRef} style={styles.content}>
-        {/* 상단 결과 카드 */}
-        <div style={{ ...styles.heroCard, background: gradientStyle }}>
-          <div style={styles.heroBadge}>MY VIBE TYPE</div>
-          <span style={styles.heroEmoji}>{result.emoji}</span>
-          <h1 style={styles.heroTitle}>{result.title}</h1>
-          <p style={styles.heroSubtitle}>{result.subtitle}</p>
-        </div>
 
-        {/* 설명 */}
+      {/* Deep analysis gate */}
+      <div style={styles.section}>
+        <div style={styles.deepCard}>
+          <div style={styles.deepTitle}>심층 분석</div>
+          {deepUnlocked ? (
+            <div style={styles.deepContent}>
+              <div style={styles.insightBlock}>
+                <div style={styles.insightLabel}>그림자</div>
+                <p style={styles.insightText}>{desire.shadow}</p>
+              </div>
+              <div style={styles.insightBlock}>
+                <div style={styles.insightLabel}>인사이트</div>
+                <p style={styles.insightText}>{desire.insight}</p>
+              </div>
+            </div>
+          ) : (
+            <div style={styles.deepLocked}>
+              <div style={styles.deepLockedText}>
+                <div style={styles.blurRow}>그림자: {desire.shadow}</div>
+                <div style={styles.blurRow}>인사이트: {desire.insight}</div>
+              </div>
+              <button
+                style={{ ...styles.unlockButton, opacity: unlocking ? 0.6 : 1 }}
+                onClick={handleUnlockDeep}
+                disabled={unlocking}
+              >
+                {unlocking ? '광고 로딩 중...' : '광고 보고 잠금 해제'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Banner */}
+      {!adFree && (
+        <div style={styles.bannerWrap}>
+          <BannerAd />
+        </div>
+      )}
+
+      {/* IAP */}
+      {!adFree && (
         <div style={styles.section}>
-          <p style={styles.description}>{result.description}</p>
-        </div>
-
-        {/* 특성 태그 */}
-        <div style={styles.section}>
-          <p style={styles.sectionLabel}>나의 바이브 키워드</p>
-          <div style={styles.tagsWrap}>
-            {result.traits.map((trait) => (
-              <span key={trait} style={{ ...styles.tag, color: result.color, background: `${result.color}12` }}>
-                {trait}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* 궁합 */}
-        <div style={{ ...styles.vibeCard, borderColor: `${result.color}30` }}>
-          <p style={styles.sectionLabel}>잘 맞는 바이브</p>
-          <p style={styles.vibeText}>{result.vibeWith}</p>
-        </div>
-
-        {/* 팁 */}
-        <div style={{ ...styles.tipCard, borderLeftColor: result.color }}>
-          <p style={styles.tipLabel}>바이브 업그레이드 TIP</p>
-          <p style={styles.tipText}>{result.tip}</p>
-        </div>
-
-        {/* 버튼 */}
-        <div style={styles.buttonSection}>
-          <button style={{ ...styles.shareButton, background: gradientStyle }} onClick={handleShare}>
-            친구 바이브도 체크해보기 ⚡
-          </button>
-          <button style={styles.retryButton} onClick={onRetry}>
-            다시 체크하기
+          <button
+            style={{ ...styles.iapButton, opacity: purchasing ? 0.6 : 1 }}
+            onClick={handleBuyAdFree}
+            disabled={purchasing}
+          >
+            {purchasing ? '처리 중...' : '광고 없이 즐기기 ₩990'}
           </button>
         </div>
+      )}
+
+      {/* Actions */}
+      <div style={styles.section}>
+        <button style={styles.mapButton} onClick={onViewMap}>
+          7일 욕망 지도 보기
+        </button>
+        <button style={styles.homeButton} onClick={onHome}>
+          홈으로
+        </button>
       </div>
     </div>
   );
@@ -118,169 +154,161 @@ export default function Result({ result, onRetry }: ResultProps) {
 const styles: Record<string, React.CSSProperties> = {
   container: {
     minHeight: '100vh',
-    background: '#F8F6FF',
+    background: '#0D0D0D',
+    color: '#FFFFFF',
+    paddingBottom: '40px',
   },
-  content: {
-    padding: '0 0 60px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  heroCard: {
-    padding: '48px 24px 40px',
+  hero: {
+    padding: '56px 24px 32px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '10px',
-    marginBottom: '4px',
+    textAlign: 'center',
   },
-  heroBadge: {
-    fontSize: '11px',
-    fontWeight: 700,
-    letterSpacing: '2px',
-    color: 'rgba(255,255,255,0.8)',
-    background: 'rgba(255,255,255,0.2)',
-    padding: '4px 12px',
-    borderRadius: '99px',
-    marginBottom: '4px',
-  },
-  heroEmoji: {
-    fontSize: '64px',
-    lineHeight: 1,
-  },
-  heroTitle: {
-    fontSize: '30px',
-    fontWeight: 900,
-    color: '#FFFFFF',
-    letterSpacing: '-0.5px',
-  },
-  heroSubtitle: {
-    fontSize: '15px',
-    color: 'rgba(255,255,255,0.85)',
-    fontWeight: 500,
-  },
-  section: {
-    background: '#FFFFFF',
-    padding: '20px',
-    marginHorizontal: '0',
-  },
-  sectionLabel: {
+  resultBadge: {
     fontSize: '11px',
     fontWeight: 700,
     letterSpacing: '1.5px',
-    color: '#9CA3AF',
-    marginBottom: '12px',
-    textTransform: 'uppercase' as const,
+    color: 'rgba(255,255,255,0.5)',
+    textTransform: 'uppercase',
+    marginBottom: '20px',
   },
-  description: {
-    fontSize: '15px',
-    color: '#374151',
-    lineHeight: 1.75,
+  heroEmoji: { fontSize: '72px', marginBottom: '16px' },
+  heroLabel: { fontSize: '36px', fontWeight: 900, letterSpacing: '-1px', marginBottom: '6px' },
+  heroHanja: { fontSize: '16px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px' },
+  heroShort: { fontSize: '15px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 },
+  section: {
+    padding: '0 20px',
+    marginBottom: '24px',
   },
-  tagsWrap: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '8px',
-  },
-  tag: {
-    padding: '6px 14px',
-    borderRadius: '99px',
-    fontSize: '13px',
-    fontWeight: 600,
-  },
-  vibeCard: {
-    background: '#FFFFFF',
-    padding: '20px',
-    border: '1px solid',
-    marginHorizontal: '0',
-  },
-  vibeText: {
-    fontSize: '14px',
-    color: '#374151',
-    lineHeight: 1.6,
-  },
-  tipCard: {
-    background: '#FFFFFF',
-    padding: '20px',
-    borderLeft: '3px solid',
-    marginHorizontal: '0',
-  },
-  tipLabel: {
-    fontSize: '13px',
-    fontWeight: 700,
-    color: '#1F2937',
-    marginBottom: '8px',
-  },
-  tipText: {
-    fontSize: '14px',
-    color: '#6B7280',
-    lineHeight: 1.6,
-  },
-  buttonSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    padding: '8px 20px 0',
-  },
-  shareButton: {
-    width: '100%',
-    padding: '18px',
-    color: '#FFFFFF',
+  fullDesc: {
     fontSize: '16px',
+    lineHeight: 1.75,
+    color: 'rgba(255,255,255,0.8)',
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: '16px',
+    padding: '20px',
+  },
+  sectionTitle: {
+    fontSize: '13px',
     fontWeight: 700,
-    borderRadius: '14px',
-    letterSpacing: '-0.3px',
-    boxShadow: '0 4px 20px rgba(124,58,237,0.3)',
-  },
-  retryButton: {
-    width: '100%',
-    padding: '17px',
-    background: '#F3F4F6',
-    color: '#6B7280',
-    fontSize: '15px',
-    fontWeight: 600,
-    borderRadius: '14px',
-  },
-  modalOverlay: {
-    position: 'fixed' as const,
-    inset: 0,
-    background: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'flex-end',
-    zIndex: 1000,
-  },
-  modalSheet: {
-    width: '100%',
-    background: '#FFFFFF',
-    borderRadius: '20px 20px 0 0',
-    padding: '32px 24px 40px',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    gap: '8px',
-  },
-  modalEmoji: {
-    fontSize: '40px',
-    marginBottom: '4px',
-  },
-  modalTitle: {
-    fontSize: '18px',
-    fontWeight: 700,
-    color: '#111827',
-  },
-  modalDesc: {
-    fontSize: '14px',
-    color: '#6B7280',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
     marginBottom: '16px',
   },
-  modalButton: {
+  barRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    marginBottom: '10px',
+  },
+  barEmoji: { fontSize: '18px', width: '24px', textAlign: 'center' },
+  barLabel: { fontSize: '13px', fontWeight: 600, width: '70px', flexShrink: 0 },
+  barTrack: {
+    flex: 1,
+    height: '6px',
+    background: 'rgba(255,255,255,0.1)',
+    borderRadius: '99px',
+    overflow: 'hidden',
+  },
+  barFill: {
+    height: '100%',
+    borderRadius: '99px',
+    transition: 'width 0.6s ease',
+  },
+  barVal: {
+    fontSize: '13px',
+    fontWeight: 700,
+    color: 'rgba(255,255,255,0.5)',
+    width: '16px',
+    textAlign: 'right',
+  },
+  deepCard: {
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '16px',
+    padding: '20px',
+  },
+  deepTitle: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: 'rgba(255,255,255,0.5)',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+    marginBottom: '16px',
+  },
+  deepContent: {},
+  insightBlock: { marginBottom: '16px' },
+  insightLabel: {
+    fontSize: '12px',
+    fontWeight: 700,
+    color: '#C0392B',
+    marginBottom: '6px',
+  },
+  insightText: {
+    fontSize: '15px',
+    lineHeight: 1.6,
+    color: 'rgba(255,255,255,0.8)',
+  },
+  deepLocked: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  deepLockedText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  blurRow: {
+    fontSize: '14px',
+    color: 'rgba(255,255,255,0.3)',
+    filter: 'blur(5px)',
+    userSelect: 'none',
+  },
+  unlockButton: {
+    width: '100%',
+    padding: '14px',
+    background: 'linear-gradient(135deg, #C0392B 0%, #8E44AD 100%)',
+    color: '#FFFFFF',
+    fontSize: '15px',
+    fontWeight: 700,
+    borderRadius: '12px',
+  },
+  bannerWrap: {
+    padding: '0 20px',
+    marginBottom: '16px',
+  },
+  iapButton: {
+    width: '100%',
+    padding: '12px',
+    background: 'rgba(255,255,255,0.06)',
+    border: '1px solid rgba(255,255,255,0.12)',
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: '13px',
+    fontWeight: 600,
+    borderRadius: '10px',
+  },
+  mapButton: {
     width: '100%',
     padding: '16px',
-    background: '#7C3AED',
-    color: '#FFFFFF',
-    fontSize: '16px',
+    background: 'rgba(192,57,43,0.15)',
+    border: '1px solid rgba(192,57,43,0.3)',
+    color: '#E74C3C',
+    fontSize: '15px',
     fontWeight: 700,
-    borderRadius: '14px',
-    marginTop: '8px',
+    borderRadius: '12px',
+    marginBottom: '12px',
+  },
+  homeButton: {
+    width: '100%',
+    padding: '14px',
+    background: 'rgba(255,255,255,0.06)',
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: '14px',
+    fontWeight: 600,
+    borderRadius: '12px',
   },
 };

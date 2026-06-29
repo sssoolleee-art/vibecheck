@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 636px;
+  height: 1048px;
+  background: #0D0D0D;
+  font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  color: #fff;
+  padding: 48px 24px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+.bar { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
+.bar-fill { width: 40%; height: 100%; background: linear-gradient(90deg, #C0392B, #8E44AD); border-radius: 99px; }
+.progress-text { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 600; }
+.q-section { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-bottom: 32px; }
+.q-num { font-size: 11px; font-weight: 700; color: #C0392B; letter-spacing: 1px; margin-bottom: 16px; }
+.q-text { font-size: 26px; font-weight: 800; line-height: 1.4; letter-spacing: -0.5px; }
+.options { display: flex; flex-direction: column; gap: 12px; }
+.opt { display: flex; align-items: center; gap: 14px; padding: 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; font-size: 15px; }
+.opt.selected { background: rgba(192,57,43,0.25); border-color: #C0392B; }
+.alpha { width: 28px; height: 28px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.opt.selected .alpha { background: rgba(192,57,43,0.4); }
+</style>
+</head>
+<body>
+<div class="progress-wrap">
+  <div class="bar"><div class="bar-fill"></div></div>
+  <div class="progress-text">2 / 5</div>
+</div>
+<div class="q-section">
+  <div class="q-num">Q2</div>
+  <div class="q-text">오늘 가장 하고 싶은 것<br>하나만 고른다면?</div>
+</div>
+<div class="options">
+  <div class="opt"><div class="alpha">A</div><span>아무것도 안 하고 그냥 자기</span></div>
+  <div class="opt"><div class="alpha">B</div><span>맛있는 거 먹으러 가기</span></div>
+  <div class="opt selected"><div class="alpha">C</div><span>누군가와 깊은 대화 나누기</span></div>
+  <div class="opt"><div class="alpha">D</div><span>혼자 좋아하는 걸 실컷 하기</span></div>
+</div>
+</body>
+</html>

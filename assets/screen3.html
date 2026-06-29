@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 636px;
+  height: 1048px;
+  background: #0D0D0D;
+  font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.hero {
+  padding: 56px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(233,30,140,0.15) 0%, #0D0D0D 100%);
+}
+.badge { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.emoji { font-size: 80px; margin-bottom: 14px; }
+.label { font-size: 38px; font-weight: 900; letter-spacing: -1px; margin-bottom: 4px; }
+.hanja { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+.short { font-size: 14px; color: rgba(255,255,255,0.55); }
+.body { padding: 0 24px; flex: 1; }
+.full-desc {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+.bars-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.bar-em { font-size: 16px; width: 22px; }
+.bar-lbl { font-size: 12px; font-weight: 600; width: 55px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 5px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; }
+.bar-val { font-size: 12px; color: rgba(255,255,255,0.4); width: 14px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="badge">오늘의 지배 욕망</div>
+  <div class="emoji">💗</div>
+  <div class="label">애(사랑)</div>
+  <div class="hanja">愛</div>
+  <div class="short">사랑과 집착</div>
+</div>
+<div class="body">
+  <div class="full-desc">사랑이 당신의 중심입니다. 사랑받고 싶고, 사랑하고 싶고, 연결되고 싶습니다. 이 욕구가 강할수록 집착과 상처도 깊어집니다. 당신의 가장 큰 강점이자 아킬레스건입니다.</div>
+  <div class="bars-title">욕망 분포</div>
+  <div class="bar-row"><div class="bar-em">💗</div><div class="bar-lbl">애정</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#E91E8C"></div></div><div class="bar-val">3</div></div>
+  <div class="bar-row"><div class="bar-em">😢</div><div class="bar-lbl">애</div><div class="bar-track"><div class="bar-fill" style="width:66%;background:#5D6D7E"></div></div><div class="bar-val">2</div></div>
+  <div class="bar-row"><div class="bar-em">💰</div><div class="bar-lbl">재욕</div><div class="bar-track"><div class="bar-fill" style="width:33%;background:#F39C12"></div></div><div class="bar-val">1</div></div>
+</div>
+</body>
+</html>

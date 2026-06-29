@@ -1,15 +1,15 @@
 import { defineConfig } from '@apps-in-toss/web-framework/config';
 
 export default defineConfig({
-  appName: 'vibecheck',
+  appName: 'desireindex',
   brand: {
-    displayName: '바이브체크',
-    primaryColor: '#7C3AED',
-    icon: 'https://static.toss.im/appsintoss/27863/632933b5-c722-4b43-b879-00874e9ead34.png',
+    displayName: '욕망 지수',
+    primaryColor: '#C0392B',
+    icon: 'https://static.toss.im/appsintoss/27863/f3b58c21-4cff-416b-aff4-490e884f3427.png',
   },
   web: {
     host: 'localhost',
-    port: 5173,
+    port: 5184,
     commands: {
       dev: 'vite',
       build: 'vite build',

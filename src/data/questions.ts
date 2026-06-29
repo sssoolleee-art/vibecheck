@@ -1,186 +1,185 @@
+import type { DesireKey } from './desires';
+
 export interface Question {
   id: number;
   text: string;
-  emoji: string;
-  options: {
-    text: string;
-    scores: Record<string, number>;
-  }[];
+  options: { text: string; desire: DesireKey }[];
 }
 
-export interface ResultType {
-  id: string;
-  title: string;
-  emoji: string;
-  subtitle: string;
-  description: string;
-  traits: string[];
-  vibeWith: string;
-  tip: string;
-  color: string;
-  gradient: [string, string];
-}
-
-// 4가지 바이브 유형: 파이어(F), 웨이브(W), 스파크(S), 딥(D)
-export const questions: Question[] = [
+// 날짜 기반으로 매일 5개 다른 질문 선택
+export const ALL_QUESTIONS: Question[] = [
   {
     id: 1,
-    text: '새로운 프로젝트가 생겼을 때 나는?',
-    emoji: '🚀',
+    text: '월급이 들어왔다. 가장 먼저 하는 생각은?',
     options: [
-      { text: '바로 실행 모드. 일단 시작하고 본다', scores: { F: 2 } },
-      { text: '어떻게 흘러갈지 보면서 자연스럽게 합류한다', scores: { W: 2 } },
-      { text: '독특한 아이디어 없는지 먼저 탐색한다', scores: { S: 2 } },
-      { text: '의미 있는 일인지 먼저 따져본다', scores: { D: 2 } },
+      { text: '저축/투자 얼마 할지 바로 계산', desire: '재욕' },
+      { text: '뭐 맛있는 거 먹을까', desire: '식욕' },
+      { text: '갖고 싶었던 거 사야지', desire: '색욕' },
+      { text: '이 정도론 부족한데…', desire: '욕' },
     ],
   },
   {
     id: 2,
-    text: '무리에서 나는 주로 어떤 포지션?',
-    emoji: '👥',
+    text: '오늘 가장 하고 싶은 것 하나만 고른다면?',
     options: [
-      { text: '분위기 리드하는 편. 자연스럽게 앞에 있다', scores: { F: 2 } },
-      { text: '갈등 중재하고 분위기 부드럽게 만드는 편', scores: { W: 2 } },
-      { text: '엉뚱한 아이디어로 분위기 띄우는 편', scores: { S: 2 } },
-      { text: '조용히 관찰하다가 핵심 찌르는 말 하는 편', scores: { D: 2 } },
+      { text: '아무것도 안 하고 그냥 자기', desire: '수면욕' },
+      { text: '맛있는 거 먹으러 가기', desire: '식욕' },
+      { text: '누군가와 깊은 대화 나누기', desire: '애정' },
+      { text: '혼자 좋아하는 걸 실컷 하기', desire: '색욕' },
     ],
   },
   {
     id: 3,
-    text: '아무 계획 없는 주말, 나는?',
-    emoji: '☀️',
+    text: '친한 친구가 나보다 훨씬 잘 됐다. 솔직한 속마음은?',
     options: [
-      { text: '뭐라도 한다. 가만히 있는 게 더 힘들다', scores: { F: 2 } },
-      { text: '그냥 흘러가는 대로. 뭔가 생기겠지', scores: { W: 2 } },
-      { text: '즉흥으로 뭔가 새로운 거 해본다', scores: { S: 2 } },
-      { text: '오히려 좋아. 혼자만의 시간을 충전한다', scores: { D: 2 } },
+      { text: '진심으로 축하한다', desire: '희' },
+      { text: '나도 저렇게 될 수 있을까 불안하다', desire: '구' },
+      { text: '왜 나는 안 되지 속상하다', desire: '애' },
+      { text: '나도 저 이상 돼야겠다 자극받는다', desire: '명예욕' },
     ],
   },
   {
     id: 4,
-    text: '중요한 결정 앞에서 나는?',
-    emoji: '🎯',
+    text: '누군가 나를 무시하는 발언을 했다. 반응은?',
     options: [
-      { text: '빠르게 판단하고 실행. 고민이 길면 답 없다', scores: { F: 2 } },
-      { text: '주변 상황과 사람들 반응 보면서 결정한다', scores: { W: 2 } },
-      { text: '직관을 믿는다. 끌리는 쪽으로 간다', scores: { S: 2 } },
-      { text: '시간이 걸려도 깊이 생각하고 결정한다', scores: { D: 2 } },
+      { text: '바로 반박하고 싸운다', desire: '노' },
+      { text: '겉으론 웃고 속으론 기억해둔다', desire: '오' },
+      { text: '상처받고 며칠 동안 생각난다', desire: '애' },
+      { text: '무시당하지 않을 만큼 성공해야겠다고 다짐', desire: '명예욕' },
     ],
   },
   {
     id: 5,
-    text: '스트레스 받을 때 나만의 해소법은?',
-    emoji: '🌀',
+    text: '지금 당장 선택해야 한다면?',
     options: [
-      { text: '몸을 움직인다. 운동이나 활동적인 걸 한다', scores: { F: 2 } },
-      { text: '좋아하는 사람들이랑 시간을 보낸다', scores: { W: 2 } },
-      { text: '뭔가 만들거나 창작 활동을 한다', scores: { S: 2 } },
-      { text: '혼자 조용히 생각을 정리하는 시간을 갖는다', scores: { D: 2 } },
+      { text: '억대 연봉이지만 아무도 모르는 직업', desire: '재욕' },
+      { text: '돈 적지만 모두가 부러워하는 직업', desire: '명예욕' },
+      { text: '평범한 연봉이지만 퇴근 후 자유 완전 보장', desire: '수면욕' },
+      { text: '내가 진짜 좋아하는 일', desire: '욕' },
     ],
   },
   {
     id: 6,
-    text: '처음 만난 사람과 대화할 때 나는?',
-    emoji: '💬',
+    text: '연인이 "요즘 네가 좀 변한 것 같아"라고 했다. 첫 반응은?',
     options: [
-      { text: '먼저 대화 시작하는 편. 어색함은 내가 깬다', scores: { F: 2 } },
-      { text: '상대 페이스에 맞춰서 자연스럽게 흘러간다', scores: { W: 2 } },
-      { text: '엉뚱하거나 신선한 주제로 대화를 이끈다', scores: { S: 2 } },
-      { text: '깊은 대화를 선호. 표면적인 얘기는 별로다', scores: { D: 2 } },
+      { text: '왜? 어떻게 변했는데? (방어적)', desire: '노' },
+      { text: '많이 힘들었나 봐… (울컥)', desire: '애' },
+      { text: '그래서 날 싫어하는 건 아니지? (불안)', desire: '구' },
+      { text: '맞아, 나 요즘 뭔가 달라지고 싶어', desire: '욕' },
     ],
   },
   {
     id: 7,
-    text: '나의 에너지 충전 방식은?',
-    emoji: '⚡',
+    text: '혼자만의 시간이 생겼다. 뭘 하나?',
     options: [
-      { text: '뭔가를 이루거나 완성했을 때 충전된다', scores: { F: 2 } },
-      { text: '평화롭고 편안한 환경에 있을 때 충전된다', scores: { W: 2 } },
-      { text: '새로운 자극이나 영감을 받을 때 충전된다', scores: { S: 2 } },
-      { text: '혼자 깊이 몰입할 수 있을 때 충전된다', scores: { D: 2 } },
+      { text: '그냥 누워서 아무것도 안 함', desire: '수면욕' },
+      { text: '맛집 투어 혹은 배달', desire: '식욕' },
+      { text: '좋아하는 콘텐츠에 완전히 빠짐', desire: '색욕' },
+      { text: '미래 계획 세우거나 자기계발', desire: '명예욕' },
     ],
   },
   {
     id: 8,
-    text: '나에게 이상적인 하루는?',
-    emoji: '🌟',
+    text: '소중한 사람과 크게 싸웠다. 그 이후 행동은?',
     options: [
-      { text: '할 일 다 해치우고 성취감 느끼는 하루', scores: { F: 2 } },
-      { text: '무리 없이 흘러가고 모두가 좋은 하루', scores: { W: 2 } },
-      { text: '예상 못한 재미있는 일이 생기는 하루', scores: { S: 2 } },
-      { text: '뭔가 깊이 생각하게 되는 인사이트가 있는 하루', scores: { D: 2 } },
+      { text: '먼저 연락해서 화해 시도', desire: '애정' },
+      { text: '상대방이 연락올 때까지 기다림', desire: '노' },
+      { text: '혼자 울거나 힘들어함', desire: '애' },
+      { text: '그 사람 지워버리기로 결심', desire: '오' },
+    ],
+  },
+  {
+    id: 9,
+    text: '갑자기 큰돈이 생겼다. 진짜 속마음으로 하고 싶은 건?',
+    options: [
+      { text: '더 불려서 부자가 되기', desire: '재욕' },
+      { text: '하고 싶었던 경험 다 해보기', desire: '색욕' },
+      { text: '좋아하는 사람들에게 쓰기', desire: '애정' },
+      { text: '지금 당장은 안 쓰고 나중을 위해 묻어두기', desire: '구' },
+    ],
+  },
+  {
+    id: 10,
+    text: '새벽 3시에 잠이 안 온다. 머릿속에 있는 건?',
+    options: [
+      { text: '돈 걱정, 미래 불안', desire: '재욕' },
+      { text: '누군가에 대한 감정', desire: '애정' },
+      { text: '억울하거나 화나는 기억', desire: '노' },
+      { text: '이 삶이 맞는 건지 근본적인 의문', desire: '욕' },
+    ],
+  },
+  {
+    id: 11,
+    text: '오늘 기분이 안 좋다. 회복하는 방법은?',
+    options: [
+      { text: '실컷 자고 일어나면 낫겠지', desire: '수면욕' },
+      { text: '맛있는 거 먹으면 좀 나아짐', desire: '식욕' },
+      { text: '좋아하는 사람과 시간 보내기', desire: '애정' },
+      { text: '혼자 생각 정리하면서 삭히기', desire: '애' },
+    ],
+  },
+  {
+    id: 12,
+    text: '회사에서 칭찬을 받았다. 무슨 말을 들으면 가장 기쁜가?',
+    options: [
+      { text: '"이번 프로젝트 덕분에 수익이 많이 났어요"', desire: '재욕' },
+      { text: '"당신 없으면 안 돼요, 정말 대단해요"', desire: '명예욕' },
+      { text: '"팀 분위기를 밝게 만들어줘서 고마워요"', desire: '희' },
+      { text: '"당신 덕분에 제가 많이 배웠어요"', desire: '애정' },
+    ],
+  },
+  {
+    id: 13,
+    text: '싫어하는 사람을 어쩔 수 없이 계속 봐야 할 때 전략은?',
+    options: [
+      { text: '철저히 무시하고 없는 사람 취급', desire: '오' },
+      { text: '겉으론 잘 대하되 속으론 경계 최대치', desire: '구' },
+      { text: '직접 말해서 해결하거나 싸움', desire: '노' },
+      { text: '그냥 내 감정 죽이고 참음', desire: '애' },
+    ],
+  },
+  {
+    id: 14,
+    text: '5년 후 나의 모습, 가장 원하는 건 하나 고른다면?',
+    options: [
+      { text: '경제적으로 완전히 자유로운 상태', desire: '재욕' },
+      { text: '내 분야에서 인정받는 전문가', desire: '명예욕' },
+      { text: '사랑하는 사람들과 평화로운 일상', desire: '애정' },
+      { text: '지금보다 훨씬 더 나다운 삶', desire: '욕' },
+    ],
+  },
+  {
+    id: 15,
+    text: '당신이 가장 참기 힘든 상황은?',
+    options: [
+      { text: '돈이 없거나 경제적으로 불안정할 때', desire: '재욕' },
+      { text: '아무도 나를 알아주지 않을 때', desire: '명예욕' },
+      { text: '사랑하는 사람에게 외면받을 때', desire: '애정' },
+      { text: '의미 없이 그냥 시간만 보낼 때', desire: '욕' },
     ],
   },
 ];
 
-export const resultTypes: Record<string, ResultType> = {
-  F: {
-    id: 'F',
-    title: '파이어 바이브',
-    emoji: '🔥',
-    subtitle: '불꽃 같은 에너지의 소유자',
-    description:
-      '어디서든 에너지가 넘치고 추진력이 강한 타입이에요. 생각보다 행동이 먼저고, 도전을 두려워하지 않아요. 주변 사람들은 당신의 열정에 자연스럽게 끌리고, 당신이 있으면 분위기가 달라져요. 목표가 생기면 빠르게 달려가는 게 당신의 바이브.',
-    traits: ['강한 추진력', '리더십', '빠른 실행력', '넘치는 에너지'],
-    vibeWith: '딥 바이브(D)와 궁합이 좋아요. 서로의 부족한 부분을 채워줘요',
-    tip: '가끔은 속도를 늦추고 주변을 돌아보세요. 깊이가 더해지면 더 강력해져요 🔥',
-    color: '#F97316',
-    gradient: ['#F97316', '#EF4444'],
-  },
-  W: {
-    id: 'W',
-    title: '웨이브 바이브',
-    emoji: '🌊',
-    subtitle: '물처럼 유연하게 흐르는 타입',
-    description:
-      '어떤 상황에도 자연스럽게 적응하는 능력이 탁월해요. 억지로 밀어붙이기보다 흐름을 타면서 가장 좋은 타이밍을 기다릴 줄 알아요. 사람들과의 관계에서 마찰을 줄이는 능력이 있고, 당신 곁에 있으면 편안함을 느끼는 사람이 많아요.',
-    traits: ['뛰어난 적응력', '조화로운 성격', '자연스러운 공감', '유연한 사고'],
-    vibeWith: '파이어 바이브(F)나 스파크 바이브(S)와 잘 어울려요',
-    tip: '흐름을 타는 것도 좋지만, 때로는 원하는 걸 먼저 말해보세요. 당신의 의견도 중요해요 🌊',
-    color: '#0EA5E9',
-    gradient: ['#0EA5E9', '#6366F1'],
-  },
-  S: {
-    id: 'S',
-    title: '스파크 바이브',
-    emoji: '⚡',
-    subtitle: '번개처럼 터지는 아이디어 메이커',
-    description:
-      '남들이 보지 못하는 걸 보고, 예상치 못한 방향으로 생각하는 게 특기예요. 창의성과 즉흥성이 합쳐진 타입으로, 루틴보다 새로운 자극에서 에너지를 얻어요. 지루함을 못 참고, 항상 다음 아이디어가 머릿속에서 튀어나오는 사람이에요.',
-    traits: ['폭발적인 창의력', '즉흥성', '새로운 시각', '트렌드 감각'],
-    vibeWith: '딥 바이브(D)와 시너지가 폭발해요. 깊이와 창의가 만나면 최강 조합',
-    tip: '아이디어를 완성까지 끌고 가는 연습을 해보세요. 시작만큼 마무리도 멋질 거예요 ⚡',
-    color: '#7C3AED',
-    gradient: ['#7C3AED', '#06B6D4'],
-  },
-  D: {
-    id: 'D',
-    title: '딥 바이브',
-    emoji: '🌙',
-    subtitle: '수면 아래 깊이를 가진 사람',
-    description:
-      '표면보다 본질을 먼저 보는 타입이에요. 말수가 적을 수 있지만, 말할 땐 핵심을 찔러요. 감수성이 풍부하고 자기 내면 세계가 뚜렷해요. 깊이 있는 대화와 사유를 즐기며, 주변 사람들에게 인사이트를 주는 존재로 기억돼요.',
-    traits: ['깊은 사유력', '예리한 통찰', '풍부한 감수성', '본질 집중'],
-    vibeWith: '스파크 바이브(S)나 파이어 바이브(F)와 좋은 균형을 이뤄요',
-    tip: '당신의 생각을 더 자주 꺼내보세요. 세상은 당신의 관점이 필요해요 🌙',
-    color: '#6366F1',
-    gradient: ['#6366F1', '#A855F7'],
-  },
-};
+export function getDailyQuestions(dateStr: string): Question[] {
+  // 날짜를 seed로 사용해 매일 다른 5문제 선택 (Fisher-Yates 셔플)
+  let seed = 0;
+  for (let i = 0; i < dateStr.length; i++) {
+    seed = ((seed << 5) - seed) + dateStr.charCodeAt(i);
+    seed |= 0;
+  }
+  function rand() {
+    seed = (seed * 1664525 + 1013904223) | 0;
+    return (seed >>> 0) / 4294967296;
+  }
+  const arr = [...ALL_QUESTIONS];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, 5);
+}
 
-export function calculateResult(answers: Record<number, number>): ResultType {
-  const scores: Record<string, number> = { F: 0, W: 0, S: 0, D: 0 };
-
-  questions.forEach((q) => {
-    const answerIndex = answers[q.id];
-    if (answerIndex !== undefined) {
-      const option = q.options[answerIndex];
-      Object.entries(option.scores).forEach(([type, score]) => {
-        scores[type] = (scores[type] || 0) + score;
-      });
-    }
-  });
-
-  const topType = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-  return resultTypes[topType];
+export function getTodayStr(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }

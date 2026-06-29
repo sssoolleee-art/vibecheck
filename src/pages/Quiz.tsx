@@ -1,89 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { graniteEvent } from '@apps-in-toss/web-bridge';
-import { questions } from '../data/questions';
+import React, { useState } from 'react';
+import type { DesireKey } from '../data/desires';
+import { getDailyQuestions, getTodayStr } from '../data/questions';
 
 interface QuizProps {
-  onComplete: (answers: Record<number, number>) => void;
-  onBack: () => void;
+  onComplete: (scores: Partial<Record<DesireKey, number>>) => void;
 }
 
-export default function Quiz({ onComplete, onBack }: QuizProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
+export default function Quiz({ onComplete }: QuizProps) {
+  const todayStr = getTodayStr();
+  const questions = getDailyQuestions(todayStr);
+  const [current, setCurrent] = useState(0);
+  const [scores, setScores] = useState<Partial<Record<DesireKey, number>>>({});
   const [selected, setSelected] = useState<number | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
-  useEffect(() => {
-    const cleanup = graniteEvent.addEventListener('backEvent', {
-      onEvent: () => {
-        if (currentIndex === 0) {
-          onBack();
-        } else {
-          setCurrentIndex(currentIndex - 1);
-          setSelected(answers[questions[currentIndex - 1].id] ?? null);
-        }
-      },
-    });
-    return () => { cleanup?.(); };
-  }, [currentIndex, answers, onBack]);
+  function handleSelect(optionIdx: number) {
+    if (animating || selected !== null) return;
+    setSelected(optionIdx);
+    setAnimating(true);
 
-  const currentQuestion = questions[currentIndex];
-  const progress = ((currentIndex + 1) / questions.length) * 100;
-
-  function handleSelect(optionIndex: number) {
-    if (isAnimating) return;
-    setSelected(optionIndex);
-    setIsAnimating(true);
+    const q = questions[current];
+    const desire = q.options[optionIdx].desire;
+    const newScores = { ...scores, [desire]: (scores[desire] ?? 0) + 1 };
 
     setTimeout(() => {
-      const newAnswers = { ...answers, [currentQuestion.id]: optionIndex };
-      setAnswers(newAnswers);
-
-      if (currentIndex + 1 < questions.length) {
-        setCurrentIndex(currentIndex + 1);
-        setSelected(null);
-        setIsAnimating(false);
+      if (current + 1 >= questions.length) {
+        onComplete(newScores);
       } else {
-        onComplete(newAnswers);
+        setScores(newScores);
+        setCurrent(current + 1);
+        setSelected(null);
+        setAnimating(false);
       }
-    }, 350);
+    }, 400);
   }
+
+  const q = questions[current];
+  const progress = (current / questions.length) * 100;
 
   return (
     <div style={styles.container}>
-      <div style={styles.header}>
-        <span style={styles.progressText}>{currentIndex + 1} <span style={{ color: '#D1D5DB' }}>/ {questions.length}</span></span>
-      </div>
-
-      <div style={styles.progressBar}>
-        <div style={{ ...styles.progressFill, width: `${progress}%` }} />
-      </div>
-
-      <div style={styles.questionSection}>
-        <div style={styles.emojiBox}>
-          <span style={styles.questionEmoji}>{currentQuestion.emoji}</span>
+      {/* Progress */}
+      <div style={styles.progressWrap}>
+        <div style={styles.progressBar}>
+          <div style={{ ...styles.progressFill, width: `${progress}%` }} />
         </div>
-        <h2 style={styles.questionText}>{currentQuestion.text}</h2>
+        <span style={styles.progressText}>{current + 1} / {questions.length}</span>
       </div>
 
-      <div style={styles.optionsSection}>
-        {currentQuestion.options.map((option, index) => (
+      {/* Question */}
+      <div style={styles.questionSection}>
+        <div style={styles.qNum}>Q{current + 1}</div>
+        <h2 style={styles.qText}>{q.text}</h2>
+      </div>
+
+      {/* Options */}
+      <div style={styles.options}>
+        {q.options.map((opt, i) => (
           <button
-            key={index}
+            key={i}
             style={{
-              ...styles.optionButton,
-              ...(selected === index ? styles.optionSelected : {}),
+              ...styles.option,
+              ...(selected === i ? styles.optionSelected : {}),
+              ...(selected !== null && selected !== i ? styles.optionDimmed : {}),
             }}
-            onClick={() => handleSelect(index)}
+            onClick={() => handleSelect(i)}
           >
-            <span style={{
-              ...styles.optionIndex,
-              ...(selected === index ? styles.optionIndexSelected : {}),
-            }}>
-              {['A', 'B', 'C', 'D'][index]}
-            </span>
-            <span style={styles.optionText}>{option.text}</span>
-            {selected === index && <span style={styles.checkmark}>✓</span>}
+            <span style={styles.optionAlpha}>{['A', 'B', 'C', 'D'][i]}</span>
+            <span style={styles.optionText}>{opt.text}</span>
           </button>
         ))}
       </div>
@@ -94,114 +78,96 @@ export default function Quiz({ onComplete, onBack }: QuizProps) {
 const styles: Record<string, React.CSSProperties> = {
   container: {
     minHeight: '100vh',
+    background: '#0D0D0D',
+    color: '#FFFFFF',
+    padding: '48px 20px 40px',
     display: 'flex',
     flexDirection: 'column',
-    background: '#FFFFFF',
-    padding: '0 20px 40px',
   },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: '16px',
-    paddingBottom: '12px',
-  },
-  progressText: {
-    fontSize: '15px',
-    fontWeight: 700,
-    color: '#1F2937',
-  },
-  progressBar: {
-    height: '4px',
-    background: '#F3F4F6',
-    borderRadius: '99px',
-    overflow: 'hidden',
-    marginBottom: '44px',
-  },
-  progressFill: {
-    height: '100%',
-    background: 'linear-gradient(90deg, #7C3AED, #06B6D4)',
-    borderRadius: '99px',
-    transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  },
-  questionSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: '28px',
-    gap: '16px',
-  },
-  emojiBox: {
-    width: '56px',
-    height: '56px',
-    background: '#F5F3FF',
-    borderRadius: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  questionEmoji: {
-    fontSize: '28px',
-  },
-  questionText: {
-    fontSize: '22px',
-    fontWeight: 800,
-    color: '#111827',
-    lineHeight: 1.4,
-    letterSpacing: '-0.5px',
-  },
-  optionsSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    flex: 1,
-  },
-  optionButton: {
-    width: '100%',
-    padding: '16px 18px',
-    background: '#F9FAFB',
-    borderRadius: '14px',
+  progressWrap: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    border: '2px solid transparent',
-    transition: 'all 0.2s',
+    marginBottom: '40px',
+  },
+  progressBar: {
+    flex: 1,
+    height: '4px',
+    background: 'rgba(255,255,255,0.1)',
+    borderRadius: '99px',
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    background: 'linear-gradient(90deg, #C0392B, #8E44AD)',
+    borderRadius: '99px',
+    transition: 'width 0.4s ease',
+  },
+  progressText: {
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.4)',
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+  },
+  questionSection: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: '32px',
+  },
+  qNum: {
+    fontSize: '12px',
+    fontWeight: 700,
+    color: '#C0392B',
+    letterSpacing: '1px',
+    marginBottom: '16px',
+  },
+  qText: {
+    fontSize: '24px',
+    fontWeight: 800,
+    lineHeight: 1.4,
+    letterSpacing: '-0.5px',
+  },
+  options: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  option: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+    padding: '16px',
+    background: 'rgba(255,255,255,0.06)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '14px',
+    color: '#FFFFFF',
+    fontSize: '15px',
     textAlign: 'left',
+    transition: 'all 0.2s ease',
   },
   optionSelected: {
-    background: '#F5F3FF',
-    borderColor: '#7C3AED',
+    background: 'rgba(192,57,43,0.25)',
+    borderColor: '#C0392B',
   },
-  optionIndex: {
+  optionDimmed: {
+    opacity: 0.35,
+  },
+  optionAlpha: {
     width: '28px',
     height: '28px',
-    background: '#FFFFFF',
-    borderRadius: '8px',
+    background: 'rgba(255,255,255,0.1)',
+    borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '12px',
     fontWeight: 700,
-    color: '#9CA3AF',
     flexShrink: 0,
-    boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-  },
-  optionIndexSelected: {
-    background: '#7C3AED',
-    color: '#FFFFFF',
-    boxShadow: 'none',
   },
   optionText: {
-    fontSize: '15px',
-    fontWeight: 500,
-    color: '#1F2937',
-    flex: 1,
     lineHeight: 1.4,
-  },
-  checkmark: {
-    fontSize: '15px',
-    color: '#7C3AED',
-    fontWeight: 700,
-    flexShrink: 0,
+    fontWeight: 500,
   },
 };
