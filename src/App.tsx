@@ -9,6 +9,7 @@ import { DESIRE_KEYS } from './data/desires';
 import { getTodayStr } from './data/questions';
 import { saveDayResult } from './utils/storage';
 import { showInterstitialAd } from './utils/ads';
+import { logGrowth } from './utils/growth';
 
 type Screen = 'home' | 'quiz' | 'result' | 'map';
 
@@ -46,6 +47,7 @@ export default function App() {
     // Save result
     const today = getTodayStr();
     saveDayResult({ date: today, dominant, scores });
+    logGrowth('test_complete', { dominant });
     setResultData({ dominant, scores });
 
     // Show interstitial before result
