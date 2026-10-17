@@ -147,7 +147,7 @@ export default function Result({ dominant, scores, totalQuestions, onHome, onVie
           7일 욕망 지도 보기
         </button>
         <button style={styles.homeButton} onClick={onHome}>
-          홈으로
+          홈으로 (광고 후 이동)
         </button>
       </div>
     </div>

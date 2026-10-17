@@ -50,8 +50,7 @@ export default function App() {
     logGrowth('test_complete', { dominant });
     setResultData({ dominant, scores });
 
-    // Show interstitial before result
-    await showInterstitialAd();
+    // 결과는 광고 없이 바로 보여주고, 전면광고는 고지된 '홈으로' 버튼에서만 노출 (검수 정책)
     setScreen('result');
   }
 
@@ -71,7 +70,7 @@ export default function App() {
           dominant={resultData.dominant}
           scores={resultData.scores}
           totalQuestions={5}
-          onHome={() => setScreen('home')}
+          onHome={() => { void showInterstitialAd().finally(() => setScreen('home')); }}
           onViewMap={() => setScreen('map')}
         />
       )}
