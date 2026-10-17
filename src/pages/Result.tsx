@@ -3,6 +3,7 @@ import type { DesireKey } from '../data/desires';
 import { DESIRES, DESIRE_KEYS } from '../data/desires';
 import { BannerAd, isAdFree, buyAdFree, showRewardedAd } from '../utils/ads';
 import { PushConsent, SubsidyPromo } from '../utils/growth';
+import { FeedbackButton } from '../utils/feedback';
 
 interface ResultProps {
   dominant: DesireKey;
@@ -122,6 +123,7 @@ export default function Result({ dominant, scores, totalQuestions, onHome, onVie
       {/* Banner */}
       <PushConsent templateCode="desireindex-daily" label="🔔 매일 저녁 7시 오늘의 질문 알림 받기" storageKey="desire_push_agreed" />
       <SubsidyPromo from="desireindex" />
+      <FeedbackButton app="desireindex" />
       {!adFree && (
         <div style={styles.bannerWrap}>
           <BannerAd />
