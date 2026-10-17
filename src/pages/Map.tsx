@@ -99,7 +99,7 @@ export default function Map({ onBack }: MapProps) {
       )}
 
       <button style={styles.backButton} onClick={onBack}>
-        돌아가기
+        처음 화면으로
       </button>
     </div>
   );

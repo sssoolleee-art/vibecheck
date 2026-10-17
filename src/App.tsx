@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { graniteEvent, closeView } from '@apps-in-toss/web-framework';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Result from './pages/Result';
@@ -19,6 +20,21 @@ interface ResultData {
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
   const [resultData, setResultData] = useState<ResultData | null>(null);
+
+  // 내비게이션 바 뒤로가기: 첫 화면이면 종료, 그 외 화면은 첫 화면으로
+  const screenRef = useRef(screen);
+  screenRef.current = screen;
+  useEffect(() => {
+    try {
+      const cleanup = graniteEvent.addEventListener('backEvent', {
+        onEvent: () => {
+          if (screenRef.current === 'home') void closeView();
+          else setScreen('home');
+        },
+      });
+      return () => { cleanup?.(); };
+    } catch { return undefined; }
+  }, []);
 
   async function handleQuizComplete(scores: Partial<Record<DesireKey, number>>) {
     // Find dominant desire
