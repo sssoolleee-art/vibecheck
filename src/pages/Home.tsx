@@ -84,7 +84,7 @@ export default function Home({ onStart, onViewMap }: HomeProps) {
             </div>
           </div>
           <button style={styles.retakeButton} onClick={onStart}>
-            다시 진단하기 (결과 전 광고)
+            다시 진단하기
           </button>
         </div>
       ) : (
@@ -95,7 +95,7 @@ export default function Home({ onStart, onViewMap }: HomeProps) {
             ))}
           </div>
           <button style={styles.startButton} onClick={onStart}>
-            오늘의 욕망 진단하기 (결과 전 광고)
+            오늘의 욕망 진단하기
           </button>
           <p style={styles.startHint}>매일 새로운 질문 · 약 1분</p>
         </div>
