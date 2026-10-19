@@ -53,10 +53,14 @@ function allowInterstitial(): boolean {
 export function showInterstitialAd(): Promise<void> {
   if (!allowInterstitial()) return Promise.resolve();
   return new Promise((resolve) => {
+    // 8초 안에 준비 안 된 광고는 나중에 도착해도 띄우지 않음 ('예상하기 어려운 시점' 방지)
+    let lateGuard = false;
+    const lateTimer = setTimeout(() => { lateGuard = true; }, 8000);
     const cleanup = loadFullScreenAd({
       options: { adGroupId: AD_ID.interstitial },
       onEvent: (event) => {
-        if (event.type === 'loaded') {
+        if (event.type === 'loaded' && !lateGuard) {
+          clearTimeout(lateTimer);
           showFullScreenAd({
             options: { adGroupId: AD_ID.interstitial },
             onEvent: (e) => {
@@ -74,6 +78,9 @@ export function showInterstitialAd(): Promise<void> {
 
 export function showRewardedAd(): Promise<boolean> {
   return new Promise((resolve) => {
+    // 8초 안에 준비 안 된 광고는 나중에 도착해도 띄우지 않음 ('예상하기 어려운 시점' 방지)
+    let lateGuard = false;
+    const lateTimer = setTimeout(() => { lateGuard = true; }, 8000);
     let resolved = false;
     function done(val: boolean) {
       if (resolved) return;
@@ -83,7 +90,8 @@ export function showRewardedAd(): Promise<boolean> {
     const cleanup = loadFullScreenAd({
       options: { adGroupId: AD_ID.rewarded },
       onEvent: (event) => {
-        if (event.type === 'loaded') {
+        if (event.type === 'loaded' && !lateGuard) {
+          clearTimeout(lateTimer);
           showFullScreenAd({
             options: { adGroupId: AD_ID.rewarded },
             onEvent: (e) => {
